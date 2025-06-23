@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Navigation, Clock, Route, Bus, AlertCircle } from 'lucide-react';
 
-// Mock bus stop data for Niš (in a real app, this would come from an API)
+// Example bus stop data for Niš
 const mockBusStops = [
   { id: 1, name: "Trg Kralja Milana", lat: 43.3209, lng: 21.8958, lines: ["1", "2", "3", "7", "11"] },
   { id: 2, name: "Tvrđava", lat: 43.3253, lng: 21.8969, lines: ["2", "4", "12"] },
@@ -26,7 +26,7 @@ const mockRoutes = [
   { line: "15", stops: [2, 8, 10], duration: 50 }
 ];
 
-// Dijkstra's algorithm implementation
+// Dijkstra's algorithm
 class Graph {
   constructor() {
     this.vertices = {};
@@ -50,15 +50,13 @@ class Graph {
     const previous = {};
     const visited = new Set();
     const queue = [];
-
-    // Initialize distances
+    
     for (let vertex in this.vertices) {
       distances[vertex] = vertex === start.toString() ? 0 : Infinity;
       queue.push(vertex);
     }
 
     while (queue.length > 0) {
-      // Find vertex with minimum distance
       let minVertex = queue.reduce((min, vertex) =>
         distances[vertex] < distances[min] ? vertex : min
       );
@@ -99,8 +97,7 @@ export default function NisTransitFinder() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const mapRef = useRef(null);
-
-  // Build graph from mock data
+  
   const buildGraph = () => {
     const graph = new Graph();
 
@@ -267,6 +264,3 @@ export default function NisTransitFinder() {
               <div className="bg-purple-50 rounded-lg p-4 text-center">
                 <Navigation className="text-purple-600 mx-auto mb-2" size={24} />
                 <div className="text-2xl font-bold text-purple-900">{route.transfers}</div>
-```
-
-Is there anything missing here which causes this not to display?
